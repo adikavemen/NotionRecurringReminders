@@ -10,10 +10,11 @@ import (
 
 func main() {
 
-	notionToken, exists := os.LookupEnv("NOTION_TOKEN")
+	notionToken, notionExists := os.LookupEnv("NOTION_TOKEN")
+	database, databaseExists := os.LookupEnv("DATABASE_ADDR")
 
-	if exists {
-		url := "https://api.notion.com/v1/databases/04e8df4e-60bd-4f2d-83ad-0e4edcb0941e/query"
+	if notionExists && databaseExists {
+		url := "https://api.notion.com/v1/databases/" + database + "/query"
 
 		payload := strings.NewReader("{\"filter\": {\"and\": [{\"property\": \"Status\",\"status\": {\"equals\": \"Not Started\"}},{\"property\": \"Tags\",\"multi_select\": {\"contains\": \"Daily\"}}]}}")
 
